@@ -1,11 +1,3 @@
-.. image:: https://img.shields.io/appveyor/ci/skvark/opencv-python.svg?maxAge=3600&label=Windows
-   :target: https://ci.appveyor.com/project/skvark/opencv-python
-   :alt: AppVeyor CI test status (Windows)
-
-.. image:: https://img.shields.io/travis/skvark/opencv-python.svg?maxAge=3600&label="Linux / OS X"
-   :target: https://travis-ci.org/skvark/opencv-python
-   :alt: Travis CI test status (Linux and OS X)
-
 OpenCV on Wheels
 ================
 
@@ -22,16 +14,15 @@ If you need only OpenCV Python bindings, no separate OpenCV installation is requ
 
 **IMPORTANT NOTE**
 
-MacOS and Linux wheels have currently some limitations:
-
-- video related functionality is not supported (not compiled with FFmpeg)
-- for example ``cv2.imshow()`` will not work (not compiled with GTK+ 2.x or Carbon support)
+MacOS and Linux wheels do not support video related functionality (not compiled with FFmpeg).
 
 Installation and Usage
 ----------------------
 
 1. If you have previous/other version of OpenCV installed (e.g. cv2 module in the root of Python's site-packages), remove it before installation to avoid conflicts.
+
  - To further avoid conflicts and to make development easier, Python's `virtual environments <https://docs.python.org/3/library/venv.html>`__ are highly recommended for development purposes.
+
 2. If you have an existing ``opencv-python`` installation, run ``pip uninstall opencv-python``
 3. Install this package:
 
@@ -60,7 +51,7 @@ A: The wheel package format and manylinux builds are pretty new things. Most lik
 
 A: If the import fails on Windows, make sure you have `Visual C++ redistributable 2015 <https://www.microsoft.com/en-us/download/details.aspx?id=48145>`__ installed. If you are using older Windows version than Windows 10 and latest system updates are not installed, `Universal C Runtime <https://support.microsoft.com/en-us/help/2999226/update-for-universal-c-runtime-in-windows>`__ might be also required.
 
-`this issue <https://github.com/skvark/opencv-python/issues/36>`__
+See also `this issue <https://github.com/skvark/opencv-python/issues/36>`__ if you are using Anaconda.
 
 **Q: I have some other import errors?**
 
@@ -72,12 +63,16 @@ A: OpenCV video I/O depends heavily on FFmpeg. Manylinux and macOS OpenCV binari
 The purpose of these packages is to provide as easy as possible installation experience for OpenCV Python bindings and they should work directly out-of-the-box.
 Adding FFmpeg as an additional dependency without a "universal" FFmpeg build (e.g. LGPL licensed build like in the Windows wheels) the goal is considerably harder to achieve. This might change in the future.
 
-**Q: Why I can't open GUI windows (``cv2.imshow()``) on GNU/Linux distribution X or on macOS?**
-
-A: Like above, OpenCV was not compiled against GTK or Carbon. Support for these might be added in the future.
-
 Documentation for opencv-python
 -------------------------------
+
+.. image:: https://img.shields.io/appveyor/ci/skvark/opencv-python.svg?maxAge=3600&label=Windows
+   :target: https://ci.appveyor.com/project/skvark/opencv-python
+   :alt: AppVeyor CI test status (Windows)
+
+.. image:: https://img.shields.io/travis/skvark/opencv-python.svg?maxAge=3600&label="Linux / OS X"
+   :target: https://travis-ci.org/skvark/opencv-python
+   :alt: Travis CI test status (Linux and OS X)
 
 The aim of this repository is to provide means to package each new
 `OpenCV release <https://github.com/opencv/opencv/releases>`__ for the
@@ -121,11 +116,10 @@ Currently the ``find_version.py`` file parses OpenCV version information
 from the OpenCV sources. OpenCV depends on numpy, so ``setup.py`` checks
 the minimum required numpy version also with the help of pip.
 
-The ``cv2.pyd/so`` file is normally copied to site-packages.
-To avoid polluting the root folder the ``__init__.py`` file in cv2 folder
-handles the import logic correctly by importing the actual ``.pyd./.so`` module
-and replacing the imported cv2 package in ``sys.modudes`` with the
-cv2 module to retain backward compatibility.
+The ``cv2.pyd/.so`` file is normally copied to site-packages.
+To avoid polluting the root folder this package wraps
+the statically built binary into cv2 package and ``__init__.py``
+file in the package handles the import logic correctly.
 
 Since both ``opencv-python`` and ``opencv-python-contrib`` use the same namespace explained above,
 it is highly recommended to uninstall the other package before switching from example from
@@ -142,6 +136,8 @@ License <https://github.com/opencv/opencv/blob/master/LICENSE>`__
 (`LICENSE-3RD-PARTY.txt <https://github.com/skvark/opencv-python/blob/master/LICENSE-3RD-PARTY.txt>`__).
 
 Windows wheels ship with `FFmpeg <http://ffmpeg.org>`__ licensed under the `LGPLv2.1 <http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>`__.
+
+Linux and MacOS wheels ship with `Qt 4.8.7 <http://doc.qt.io/qt-4.8/lgpl.html>`__ licensed under the `LGPLv2.1 <http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html>`__.
 
 Versioning
 ----------
